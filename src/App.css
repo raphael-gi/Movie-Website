@@ -1,38 +1,120 @@
-.App {
+body {
+  --bg: rgb(33, 33, 39);
+  --lighter: rgb(44, 44, 52);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg);
+  color: white;
+  margin: 0;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+button {
+  cursor: pointer;
+}
+a {
+  color: white;
+  text-decoration: none;
+}
+h1, h2, h3, h4 {
+  margin: 0;
+}
+h1 {
+  font-size: 4em;
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h2 {
+  font-size: 2em;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+h3 {
+  font-size: 1.5em;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.search-page {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  gap: 50px;
+}
+
+/* HEADER */
+header {
+  display: flex;
+  gap: 50px;
+  padding: 2% 5%;
+}
+
+/* HOME */
+#Home {
+  margin: 0 10%;
+}
+.search {
+  --btn-height: 50px;
+  height: 50vh;
+  display: grid;
+  place-items: center;
+}
+.wrap-input {
+  box-shadow: 0 0 20px 4px rgb(28, 28, 33);
+  border-radius: 50px;
+}
+.search-input {
+  height: var(--btn-height);
+  width: 500px;
+  padding: 0 25px;
+  color: white;
+  background-color: var(--lighter);
+  border-radius: 50px 0 0 50px;
+  border: none;
+}
+.search-input:focus {
+  outline: none;
+}
+.search-button {
+  background-color: var(--lighter);
+  border: none;
+  padding: 0;
+  height: var(--btn-height);
+  aspect-ratio: 1;
+  border-radius: 0 50px 50px 0;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* MOVIES */
+.wrap {
+  display: flex;
+  margin: 100px 10% 0 10%;
+  gap: 5%;
+}
+.wrap-movies {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  place-items: center;
+  gap: 50px;
+}
+.movie {
+  width: 200px;
+  height: 400px;
+  display: flex;
+}
+.movie-poster {
+  width: 200px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.filter {
+  text-align: center;
+  width: 200px;
+  background-color: var(--lighter);
+  overflow: hidden;
+  transition: 0.4s ease;
+}
+.dropdown {
+  margin: 10px 0;
+  width: 100%;
+  border: none;
+  background-color: inherit;
+  color: white;
+  font-size: 15px;
 }
