@@ -5,11 +5,12 @@ import ShowSearched from "./ShowSearched";
 
 function Searched() {
     const [searchParams, setSearchParams] = useSearchParams()
+    const [inputValue, setInputValue] = useState(searchParams.get('query'))
+    const [content, setContent] = useState(null)
 
     const MOVIE_URL = "https://api.themoviedb.org/3/search/movie?api_key=01b9f5d604812bcd787cd509a6336c8a&query="
     const SHOW_URL = "https://api.themoviedb.org/3/search/tv?api_key=01b9f5d604812bcd787cd509a6336c8a&query="
 
-    const [content, setContent] = useState(null)
     const [result, setResult] = useState({
         URL: MOVIE_URL,
         element: MovieSearched
@@ -17,7 +18,6 @@ function Searched() {
 
     useEffect(() => {
         setCont(result.URL + searchParams.get('query'))
-        console.log(searchParams.get('query'))
     }, [searchParams, result])
 
     const setCont = (URL) => {
@@ -41,15 +41,18 @@ function Searched() {
         const inp = document.getElementById("search").value
         setSearchParams({query: inp})
     }
+    const handelChange = event => {
+        setInputValue(event.target.value)
+    }
 
     if (content) {
         return (
             <div className="search-page">
                 <form onSubmit={handleSubmit}>
-                    <input id="search" />
+                    <input value={inputValue} onChange={handelChange} id="search" />
                     <button>Search</button>
                 </form>
-                <div className="filter">
+                <div>
                     <h2>Search Results</h2>
                     <button onClick= {
                         () => {

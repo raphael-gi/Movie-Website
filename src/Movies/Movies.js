@@ -15,10 +15,10 @@ function Movies() {
     
     const setMovies = () => {
         fetch(URL + attributes.sort)
-        .then((response) => response.json())
-        .then((data) => {
-            setContent(data)
-        })
+            .then((response) => response.json())
+            .then((data) => {
+                setContent(data)
+            })
     }
     const showMovies = () => {
         const results = content.results.map((cont) =>

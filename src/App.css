@@ -1,6 +1,8 @@
 body {
   --bg: rgb(33, 33, 39);
   --lighter: rgb(44, 44, 52);
+  --bl: rgb(90, 90, 230);
+  --shadow: rgb(28, 28, 33);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -33,9 +35,8 @@ h2 {
 h3 {
   font-size: 1.5em;
 }
-.search-page {
-  display: flex;
-  gap: 50px;
+.wrap {
+  margin: 0 10%;
 }
 
 /* HEADER */
@@ -44,10 +45,39 @@ header {
   gap: 50px;
   padding: 2% 5%;
 }
+.underline {
+  --translY: 22px;
+  content: "";
+  position: absolute;
+  height: 4px;
+  background-color: var(--bl);
+  transition: 0.3s ease;
+}
+.underline.home {
+  translate: -3px var(--translY);
+  width: 50px;
+}
+.underline.movies {
+  translate: 88px var(--translY);
+  width: 60px;
+}
+.underline.shows {
+  translate: 188px var(--translY);
+  width: 78px;
+}
+.underline.people {
+  translate: 307px var(--translY);
+  width: 58px;
+}
+
 
 /* HOME */
 #Home {
   margin: 0 10%;
+}
+.search-page {
+  display: flex;
+  gap: 50px;
 }
 .search {
   --btn-height: 50px;
@@ -56,7 +86,8 @@ header {
   place-items: center;
 }
 .wrap-input {
-  box-shadow: 0 0 20px 4px rgb(28, 28, 33);
+  display: flex;
+  box-shadow: 0 0 10px 4px var(--shadow);
   border-radius: 50px;
 }
 .search-input {
@@ -82,11 +113,6 @@ header {
 }
 
 /* MOVIES */
-.wrap {
-  display: flex;
-  margin: 100px 10% 0 10%;
-  gap: 5%;
-}
 .wrap-movies {
   width: 100%;
   display: grid;
@@ -117,4 +143,71 @@ header {
   background-color: inherit;
   color: white;
   font-size: 15px;
+}
+
+/* PEOPLE */
+.wrap-input-search {
+  margin: 50px 25%;
+  --btn-height: 50px;
+}
+.search-people {
+  width: calc(100% - var(--btn-height) * 2);
+}
+.wrap-people {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 50px;
+  place-items: start center;
+}
+.person {
+  width: 200px;
+  box-shadow: 0 0 15px 10px var(--shadow);
+  padding-bottom: 10px;
+  transition: 0.3s ease;
+}
+.person:hover {
+  scale: 108%;
+  box-shadow: 0 0 25px 10px var(--shadow);
+}
+.person-title {
+  text-align: center;
+  text-align-last: center;
+}
+.profile-image {
+  width: 200px;
+}
+
+/* PERSON */
+.wrap-person {
+  margin-top: 50px;
+  display: flex;
+  gap: 4%;
+}
+.wrap-profile {
+  --picture-width: 400px;
+  display: inline;
+}
+.person-profile {
+  width: var(--picture-width);
+  transition: 0.5s ease;
+}
+.wrap-profile:hover .person-profile {
+  translate: 0 -30px
+}
+.person-profile-shadow {
+  width: var(--picture-width);
+  margin-top: 20px;
+  height: 50px;
+  background-color: rgb(0, 0, 0);
+  border-radius: 50%;
+  filter: blur(20px);
+  opacity: 90%;
+  transition: 0.5s ease;
+}
+.wrap-profile:hover .person-profile-shadow {
+  scale: 110%
+}
+
+.person-bio {
+  margin-bottom: 50px;
 }
