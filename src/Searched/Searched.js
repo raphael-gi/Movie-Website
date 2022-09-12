@@ -7,9 +7,9 @@ function Searched() {
     const [searchParams, setSearchParams] = useSearchParams()
     const [inputValue, setInputValue] = useState(searchParams.get('query'))
     const [content, setContent] = useState(null)
-
-    const MOVIE_URL = "https://api.themoviedb.org/3/search/movie?api_key=01b9f5d604812bcd787cd509a6336c8a&query="
-    const SHOW_URL = "https://api.themoviedb.org/3/search/tv?api_key=01b9f5d604812bcd787cd509a6336c8a&query="
+    
+    const MOVIE_URL = process.env.REACT_APP_API_URL + "search/movie?api_key=" + process.env.REACT_APP_API_KEY + "&query="
+    const SHOW_URL = process.env.REACT_APP_API_URL + "search/tv?api_key=" + process.env.REACT_APP_API_KEY + "&query="
 
     const [result, setResult] = useState({
         URL: MOVIE_URL,

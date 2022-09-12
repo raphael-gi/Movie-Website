@@ -1,6 +1,7 @@
 body {
   --bg: rgb(33, 33, 39);
-  --lighter: rgb(44, 44, 52);
+  --light: rgb(44, 44, 52);
+  --lighter: rgb(52, 52, 64);
   --bl: rgb(90, 90, 230);
   --shadow: rgb(28, 28, 33);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
@@ -35,8 +36,21 @@ h2 {
 h3 {
   font-size: 1.5em;
 }
+@media only screen and (max-width: 1500px) {
+  h1 {font-size: 3em}
+  h2 {font-size: 1.5em}
+  h3 {font-size: 1.25em}
+}
+@media only screen and (max-width: 1000px) {
+  h1 {font-size: 2em}
+  h2 {font-size: 1.25em}
+  h3 {font-size: 1em}
+}
 .wrap {
   margin: 0 10%;
+}
+.flex {
+  display: flex;
 }
 
 /* HEADER */
@@ -95,7 +109,7 @@ header {
   width: 500px;
   padding: 0 25px;
   color: white;
-  background-color: var(--lighter);
+  background-color: var(--light);
   border-radius: 50px 0 0 50px;
   border: none;
 }
@@ -103,7 +117,7 @@ header {
   outline: none;
 }
 .search-button {
-  background-color: var(--lighter);
+  background-color: var(--light);
   border: none;
   padding: 0;
   height: var(--btn-height);
@@ -125,14 +139,14 @@ header {
   height: 400px;
   display: flex;
 }
-.movie-poster {
+.movies-poster {
   width: 200px;
 }
 
 .filter {
   text-align: center;
   width: 200px;
-  background-color: var(--lighter);
+  background-color: var(--light);
   overflow: hidden;
   transition: 0.4s ease;
 }
@@ -143,6 +157,140 @@ header {
   background-color: inherit;
   color: white;
   font-size: 15px;
+}
+
+/* MOVIE */
+.movie-start {
+  height: 100vh;
+}
+.movie-content {
+  display: flex;
+  gap: 5%;
+}
+.movie-poster {
+  width: 400px;
+}
+.wrap-cast {
+  display: flex;
+  gap: 50px;
+  overflow-x: auto;
+}
+.cast {
+  width: 200px;
+}
+
+/* SHOW */
+.show-start {
+}
+.wrap-backdrop {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  z-index: -1;
+}
+.show-backdrop {
+  width: 50%;
+  aspect-ratio: 1.77;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.wrap-show-start {
+  position: absolute;
+  width: 45%;
+  margin-left: 5%;
+}
+.wrap-show-title {
+  display: flex;
+}
+.show-title {
+  text-align: start;
+}
+.tagline {
+  color: rgb(200, 200, 200);
+}
+
+.options {
+  margin: 100px 5%;
+  display: flex;
+  gap: 5%;
+}
+.wrap-show-options {
+  display: flex;
+  flex-direction: column;
+  width: 15%;
+}
+.show-options {
+  border: none;
+  background-color: var(--light);
+  height: 50px;
+  color: white;
+}
+.show-options:hover {
+  background-color: var(--lighter);
+}:not([options-selected])
+.options-selected {
+  background-color: var(--bl);
+}
+
+.selected-content {
+  width: 100%;
+  height: inherit;
+}
+.show-trailers {
+  display: flex;
+}
+.show-selected-trailer {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+.wrap-trailer-options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 50px;
+  height: 360px;
+  margin-left: auto;
+  overflow-y: auto;
+}
+.show-trailer {
+  cursor: pointer;  
+  width: 260px;
+  min-height: 150px;
+  background-color: var(--light);
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: grid;
+  place-items: center;
+}
+
+.wrap-show-season {
+  display: flex;
+  gap: 5%;
+}
+.wrap-seasons {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  transition: 0.3s ease;
+}
+.wrap-seasons:hover {
+  width: 50%;
+}
+.season {
+  background-color: var(--light);
+  padding: 15px 20px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.wrap-season {
+  width: 100%;
+  display: flex;
+  gap: 2%;
+}
+.season_poster {
+  width: 250px;
 }
 
 /* PEOPLE */
@@ -210,4 +358,20 @@ header {
 
 .person-bio {
   margin-bottom: 50px;
+}
+
+.wrap-credits {
+  display: flex;
+  gap: 50px;
+  overflow-x: scroll;
+}
+.credits-more {
+  margin: auto 0;
+  height: 50px;
+}
+.credit {
+  width: 200px !important;
+}
+.credit-poster {
+  width: 200px;
 }

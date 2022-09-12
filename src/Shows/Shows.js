@@ -7,7 +7,8 @@ function Shows() {
     const [attributes, setAttributes] = useState({
         sort: "popularity.desc"
     })
-    const URL = "https://api.themoviedb.org/3/discover/tv?api_key=01b9f5d604812bcd787cd509a6336c8a&sort_by="
+
+    const URL = process.env.REACT_APP_API_URL + "discover/tv?api_key=" + process.env.REACT_APP_API_KEY + "&sort_by="
 
     useEffect(() => {
         setShows()

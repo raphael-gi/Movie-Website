@@ -7,7 +7,7 @@ function Movies() {
     const [attributes, setAttributes] = useState({
         sort: "popularity.desc"
     })
-    const URL = "https://api.themoviedb.org/3/discover/movie?api_key=01b9f5d604812bcd787cd509a6336c8a&sort_by="
+    const URL = process.env.REACT_APP_API_URL + "discover/movie?api_key=" + process.env.REACT_APP_API_KEY + "&sort_by="
 
     useEffect(() => {
         setMovies()
@@ -24,7 +24,7 @@ function Movies() {
         const results = content.results.map((cont) =>
             <Link className="movie" key={cont.id} to={"/Movies/" + cont.id}>
                 <div>
-                    {cont.poster_path && <img className="movie-poster" src={"https://image.tmdb.org/t/p/w500/" + cont.poster_path} />}
+                    {cont.poster_path && <img className="movies-poster" src={"https://image.tmdb.org/t/p/w500/" + cont.poster_path} />}
                     <h3>{cont.title}</h3>
                 </div>
             </Link>
