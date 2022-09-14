@@ -36,21 +36,27 @@ h2 {
 h3 {
   font-size: 1.5em;
 }
+h4 {
+  font-size: 1.25em;
+}
 @media only screen and (max-width: 1500px) {
   h1 {font-size: 3em}
   h2 {font-size: 1.5em}
   h3 {font-size: 1.25em}
+  h4 {font-size: 1em}
 }
 @media only screen and (max-width: 1000px) {
   h1 {font-size: 2em}
   h2 {font-size: 1.25em}
   h3 {font-size: 1em}
+  h4 {font-size: 0.75em}
 }
 .wrap {
   margin: 0 10%;
 }
 .flex {
   display: flex;
+  gap: 5%;
 }
 
 /* HEADER */
@@ -89,10 +95,6 @@ header {
 #Home {
   margin: 0 10%;
 }
-.search-page {
-  display: flex;
-  gap: 50px;
-}
 .search {
   --btn-height: 50px;
   height: 50vh;
@@ -124,6 +126,74 @@ header {
   aspect-ratio: 1;
   border-radius: 0 50px 50px 0;
   color: white;
+}
+/* SEARCHED */
+.wrap-result-buttons {
+  display: grid;
+  box-shadow: 0 0 15px 10px var(--shadow);
+  background-color: var(--light);
+  width: 200px;
+}
+.result-button {
+  background-color: transparent;
+  height: 40px;
+  color: white;
+  border: none;
+  transition: 0.3s ease;
+  z-index: 1;
+}
+.result-button:hover {
+  background-color: var(--lighter);
+}:not([sel])
+.sel {
+  background-color: transparent;
+}
+
+.selected {
+  position: absolute;
+  width: 200px;
+  height: 40px;
+  background-color: var(--bl);
+  z-index: 0;
+  transition: 0.3s ease;
+}
+.selected-movies {
+  translate: 0 0px;
+  animation: smudg 0.3s ease;
+}
+.selected-show {
+  translate: 0 40px;
+  animation: smudg 0.3s ease;
+}
+.selected-people {
+  translate: 0 80px;
+  animation: smudg 0.3s ease;
+}
+@keyframes smudg {
+  0% {scale: 100%;}
+  50% {scale: 100% 120%;}
+  100% {scale: 100%;}
+}
+.wrap-content {
+  width: 100%;
+  display: grid;
+  gap: 30px;
+}
+.content {
+  display: flex;
+  box-shadow: 0 0 10px 5px var(--shadow);
+  width: 100%;
+  padding-right: 20px;
+  transition: 0.3s ease;
+}
+.content:hover {
+  scale: 102%;
+  box-shadow: 0 0 15px 10px var(--shadow);
+  z-index: 1;
+}
+.content-poster {
+  margin-right: 20px;
+  height: 150px;
 }
 
 /* MOVIES */
@@ -179,9 +249,86 @@ header {
   width: 200px;
 }
 
-/* SHOW */
-.show-start {
+/* SHOWS */
+.wrap-full-shows {
+  display: flex;
+  gap: 5%;
+  margin-top: 50px;
 }
+.wrap-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  height: fit-content;
+  position: sticky;
+  top: 5%;
+}
+.option {
+  height: 40px;
+  overflow: hidden;
+  background-color: var(--light);
+  padding: 10px;
+  box-shadow: 0 0 10px 4px var(--shadow);
+}
+.option-open {
+  height: inherit;
+}
+.option-select {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  user-select: none;
+  cursor: pointer;
+}
+.arrow {
+  margin-left: auto;
+  transition: 0.3s ease;
+}
+.option-button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 15px;
+  border: none;
+  background-color: var(--light);
+  box-shadow: 0 0 15px 10px var(--shadow);
+  color: white;
+  transition: 0.3s ease;
+}
+.option-button:hover {
+  color: black;
+  background-color: var(--bl);
+  box-shadow: 0 0 25px 10px var(--shadow);
+  scale: 105%;
+}
+.wrap-check {
+  display: flex;
+}
+.genre-check {
+  margin: 0;
+}
+.wrap-shows {
+  --show-width: 200px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 50px;
+  width: 100%;
+}
+.show {
+  width: var(--show-width);
+  text-align: center;
+  box-shadow: 0 0 15px 10px var(--shadow);
+  padding-bottom: 10px;
+  transition: 0.3s ease;
+}
+.show:hover {
+  scale: 108%;
+  box-shadow: 0 0 25px 10px var(--shadow);
+}
+.show-poster {
+  width: var(--show-width);
+}
+
+/* SHOW */
 .wrap-backdrop {
   width: 100%;
   display: flex;
@@ -275,9 +422,6 @@ header {
   gap: 15px;
   transition: 0.3s ease;
 }
-.wrap-seasons:hover {
-  width: 50%;
-}
 .season {
   background-color: var(--light);
   padding: 15px 20px;
@@ -291,6 +435,15 @@ header {
 }
 .season_poster {
   width: 250px;
+}
+.wrap-episodes {
+  display: grid;
+  gap: 10px;
+}
+.episode {
+  background-color: var(--light);
+  padding: 10px;
+  border-radius: 5px;
 }
 
 /* PEOPLE */

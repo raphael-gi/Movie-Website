@@ -15,7 +15,7 @@ function Home() {
                 <form action="#" onSubmit={handleSubmit}>
                     <div className='wrap-input'>
                         <input className='search-input' id='search' type="text" />
-                        <button className='search-button'>S</button>
+                        <button className='search-button'><i className="bi bi-search" /></button>
                     </div>
                 </form>
             </section>
