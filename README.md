@@ -8,3 +8,6 @@ My idea for this website was to create a website with an easy navigation, clear 
 
 ## Tech Stack
 React Js
+
+## Concept designs for the website made using Figma
+![grafik](https://user-images.githubusercontent.com/99955639/193233704-56ca7810-d2e4-4b7d-8cbc-4c2ae434f04e.png)
