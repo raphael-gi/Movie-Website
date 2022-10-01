@@ -255,6 +255,25 @@ header {
   scroll-snap-align: center;
   min-width: 100%;
 }
+.wrap-trailers {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  height: 90%;
+  overflow-y: auto;
+}
+.trailer {
+  background-color: var(--light);
+  padding: 10px;
+  cursor: pointer;
+}
+.trailer-main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
 
 /* SHOWS */
 .wrap-full-shows {

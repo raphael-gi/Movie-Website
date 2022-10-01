@@ -4,9 +4,9 @@ import { Link, useParams } from "react-router-dom"
 import ReactPlayer from 'react-player'
 
 function Trailer(props) {
-    function showTrailers() {
+    const showTrailers = () => {
         const results = props.video.content.results.map((trailer) =>
-            <div onClick={
+            <div className="trailer" onClick={
                 () => {
                     props.setVideo({
                         content: props.video.content,
@@ -14,19 +14,49 @@ function Trailer(props) {
                     })
                 }
             } key={trailer.id}>
-                {trailer.name}
+                <h3>{trailer.name}</h3>
             </div>
         )
         return (
-            <div>
+            <>
                 {results}
-            </div>
+            </>
         )
     }
     return (
-        <section id="Trailers" className="content-scroll-section">
-            <ReactPlayer url={"https://www.youtube.com/watch?v=" + props.video.key} />
-            {showTrailers()}
+        <section style={{display: "flex", gap: "5%"}} id="Trailers" className="content-scroll-section">
+            <div className="trailer-main">
+                <ReactPlayer url={"https://www.youtube.com/watch?v=" + props.video.key} />
+            </div>
+            {props.video.content.results.length > 1 && <div className="wrap-trailers"> <h2>Other Trailers</h2> {showTrailers()}</div>}
+        </section>
+    )
+}
+
+function Credits(props) {
+    const [creditsAmount, setCreditsAmount] = useState(10)
+    const IMAGE_URL = process.env.REACT_APP_API_IMAGE + "w500/"
+
+    const showCast = () => {
+        const casts = props.credits.cast.slice(0, creditsAmount).map((cast) =>
+            <Link className="cast" key={cast.id} to={"/People/" + cast.id}>
+                {cast.profile_path && <img className="credit-poster" src={IMAGE_URL + cast.profile_path} />}
+                <h3>{cast.name}</h3>
+                <h4>Playing: {cast.character}</h4>
+            </Link>
+        )
+        return casts
+    }
+    return (
+        <section id="Cast" className="content-scroll-section">
+            <div className="wrap-cast">
+                {showCast()}
+                <button onClick={
+                    () => {
+                        setCreditsAmount(prevCreditsAmount => prevCreditsAmount + 10)
+                    }
+                } className="credits-more">+</button>
+            </div>
         </section>
     )
 }
@@ -34,17 +64,16 @@ function Trailer(props) {
 function Movie() {
     const { id } = useParams()
     const [content, setContent] = useState(null)
+    const [video, setVideo] = useState({
+        content: null,
+        key: null
+    })
     const [credits, setCredits] = useState(null)
-    const [creditsAmount, setCreditsAmount] = useState(10)
     const [error, setError] = useState(null)
 
     const URL = process.env.REACT_APP_API_URL + "movie/" + id + "?api_key=" + process.env.REACT_APP_API_KEY
     const IMAGE_URL = process.env.REACT_APP_API_IMAGE + "original/"
     const CREDITS_URL = process.env.REACT_APP_API_URL + "movie/" + id + "/credits?api_key=" + process.env.REACT_APP_API_KEY
-    const [video, setVideo] = useState({
-        content: null,
-        key: null
-    })
     const VIDEO_URL = "movie/" + id + "/videos?api_key=" + process.env.REACT_APP_API_KEY
     const getTrailer = (data) => {
         if (data.results.length == 0) return false
@@ -61,66 +90,17 @@ function Movie() {
         return data.results[0].key
     }
     useEffect(() => {
-        fetch(URL)
-            .then(response => {
-                if (!response.ok) {
-                    throw Error("Movie couldn't be found")
-                }
-                return response.json()
-            })
-            .then((data) => {
-                setContent(data)
-                setError(null)
-            })
-            .catch(error => {
-                setError(error.message)
-            })
-        fetch(CREDITS_URL)
-            .then(response => {
-                if (!response.ok) {
-                    throw Error("Movie couldn't be found")
-                }
-                return response.json()
-            })
-            .then((data) => {
-                setCredits(data)
-                setError(null)
-            })
-            .catch(error => {
-                setError(error.message)
-            })
         async function fetchData() {
-            const request = await axios.get(VIDEO_URL)
-            if (request.data.results.length > 0) {
-                setVideo({
-                    content: request.data,
-                    key: getTrailer(request.data)
-                })
-            }
+            const request = await axios.get(URL)
+            const requestVideo = await axios.get(VIDEO_URL)
+            const requestCredits = await axios.get(CREDITS_URL)
+            setContent(request.data)
+            if (requestVideo.data.results.length > 0) setVideo({ content: requestVideo.data, key: getTrailer(requestVideo.data)})
+            if (requestCredits.data.cast.length > 0) setCredits(requestCredits.data)
         }
         fetchData()
     }, [])
-
-    const showCast = () => {
-        const casts = credits.cast.slice(0, creditsAmount).map((cast) =>
-            <Link className="cast" key={cast.id} to={"/People/" + cast.id}>
-                {cast.profile_path && <img className="credit-poster" src={IMAGE_URL + cast.profile_path} />}
-                <h3>{cast.name}</h3>
-                <h4>Playing: {cast.character}</h4>
-            </Link>
-        )
-        return (
-            <div className="wrap-cast">
-                {casts}
-                <button onClick={
-                    () => {
-                        setCreditsAmount(prevCreditsAmount => prevCreditsAmount + 10)
-                    }
-                } className="credits-more">+</button>
-            </div>
-        )
-    }
-    if (content && credits) {
+    if (content) {
         return (
             <>
                  <section className="show-start">
@@ -140,9 +120,7 @@ function Movie() {
                     </nav>
                     <section className="content-scroll">
                         {video.content && <Trailer video={video} setVideo={setVideo} />}
-                        <section id="Cast" className="content-scroll-section">
-                            {showCast()}
-                        </section>
+                        {credits && <Credits credits={credits} setCredits={setCredits} />}
                     </section>
                 </div>
             </>
