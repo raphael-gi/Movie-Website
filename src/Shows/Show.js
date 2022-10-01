@@ -25,21 +25,22 @@ function Show() {
 
     if (content && selected.content) {
         return (
-            <>  <section className="show-start">
+            <>  
+                <section className="show-start">
                     <div className="wrap-show-start">
                         <h1 className="show-title">{content.name}</h1>
                         <h2 className="tagline"><em>{content.tagline}</em></h2>
                         <h3>{content.overview}</h3>
                     </div>
                     <div className="wrap-backdrop">
-                        <div className="show-backdrop" style={{backgroundImage: "linear-gradient(to right, rgb(33, 33, 39), rgba(117, 19, 93, 0)),url('" + IMAGE_URL + content.backdrop_path + "')"}} />
+                        <div className="show-backdrop" style={{backgroundImage: "linear-gradient(to right, rgb(33, 33, 39), rgba(0, 0, 0, 0)),url('" + IMAGE_URL + content.backdrop_path + "')"}} />
                     </div>
                 </section>
                 <section className="options">
                     <div className="wrap-show-options">
                         <button onClick={
                             () => {
-                                setSelected({index: 0, content: <Trailer />})
+                                setSelected({index: 0, content: <Trailer {...content} />})
                             }
                         } className={selected.index == 0 ? "show-options options-selected" : "show-options"}>Trailer</button>
                         <button onClick={

@@ -18,29 +18,30 @@ function Shows() {
     const IMAGE_URL = process.env.REACT_APP_API_IMAGE + "w500"
 
     useEffect(() => {
-        fetch(URL)
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data)
-            setContent(data)
-        })
         fetch(GENRE_URL)
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data)
-            setGenre(data)
-        })
+            .then((response) => response.json())
+            .then((data) => {
+                setGenre(data)
+            })
+    }, [])
+    useEffect(() => {
+        fetch(URL)
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data)
+                setContent(data)
+            })
     }, [attributes])
 
     const showShows = () => {
         const results = content.results.map((cont) =>
-            <Link className="show" key={cont.id} to={"/Shows/" + cont.id}>
-                {cont.poster_path && <img className="show-poster" src={IMAGE_URL + cont.poster_path} />}
+            <Link className="card" key={cont.id} to={"/Shows/" + cont.id}>
+                {cont.poster_path && <img className="card-poster" src={IMAGE_URL + cont.poster_path} />}
                 <h3>{cont.name}</h3>
             </Link>
         )
         return (
-            <div className="wrap-shows">
+            <div className="wrap-cards">
                 {results}
             </div>
         )
@@ -68,7 +69,8 @@ function Shows() {
         const order = document.getElementById("sort").value;
         setAttributes({
             sort: order,
-            genres: selectedGenres
+            genres: selectedGenres,
+            airDateGte: ""
         })
     }
     if (content && genre) {
@@ -103,7 +105,7 @@ function Shows() {
                                         option == 1 ? setOption(null) : setOption(1)
                                     }
                                 } className="option-select">
-                                    <h2>Fitler</h2>
+                                    <h2>Filter</h2>
                                     <i className="arrow bi bi-caret-right-fill" style={option == 1 ? {rotate: "90deg"} : {rotate: "0deg"}} />
                                 </div>
                                 <h3>Air Dates</h3>

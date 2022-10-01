@@ -1,9 +1,14 @@
-body {
+:root {
   --bg: rgb(33, 33, 39);
   --light: rgb(44, 44, 52);
   --lighter: rgb(52, 52, 64);
   --bl: rgb(90, 90, 230);
   --shadow: rgb(28, 28, 33);
+}
+* {
+  scroll-behavior: smooth;
+}
+body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -197,22 +202,6 @@ header {
 }
 
 /* MOVIES */
-.wrap-movies {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  place-items: center;
-  gap: 50px;
-}
-.movie {
-  width: 200px;
-  height: 400px;
-  display: flex;
-}
-.movies-poster {
-  width: 200px;
-}
-
 .filter {
   text-align: center;
   width: 200px;
@@ -247,6 +236,14 @@ header {
 }
 .cast {
   width: 200px;
+}
+.content-scroll {
+  overflow-y: auto;
+  height: 80vh;
+  scrollbar-color: black;
+}
+.content-scroll-section {
+  min-height: 100%;
 }
 
 /* SHOWS */
@@ -306,25 +303,25 @@ header {
 .genre-check {
   margin: 0;
 }
-.wrap-shows {
+.wrap-cards {
   --show-width: 200px;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 50px;
   width: 100%;
 }
-.show {
+.card {
   width: var(--show-width);
   text-align: center;
   box-shadow: 0 0 15px 10px var(--shadow);
   padding-bottom: 10px;
   transition: 0.3s ease;
 }
-.show:hover {
+.card:hover {
   scale: 108%;
   box-shadow: 0 0 25px 10px var(--shadow);
 }
-.show-poster {
+.card-poster {
   width: var(--show-width);
 }
 
@@ -453,29 +450,6 @@ header {
 }
 .search-people {
   width: calc(100% - var(--btn-height) * 2);
-}
-.wrap-people {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 50px;
-  place-items: start center;
-}
-.person {
-  width: 200px;
-  box-shadow: 0 0 15px 10px var(--shadow);
-  padding-bottom: 10px;
-  transition: 0.3s ease;
-}
-.person:hover {
-  scale: 108%;
-  box-shadow: 0 0 25px 10px var(--shadow);
-}
-.person-title {
-  text-align: center;
-  text-align-last: center;
-}
-.profile-image {
-  width: 200px;
 }
 
 /* PERSON */

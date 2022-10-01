@@ -6,11 +6,11 @@ function Header() {
     const [underline, setUnderline] = useState("home")
     const location = useLocation();
     useEffect(() => {
-        const loc = location.pathname
-        if (loc == "/") setUnderline("home")
-        if (loc == "/Movies") setUnderline("movies")
-        if (loc == "/Shows") setUnderline("shows")
-        if (loc == "/People") setUnderline("people")
+        const loc = location.pathname.split("/")[1]
+        if (loc == "") setUnderline("home")
+        if (loc == "Movies") setUnderline("movies")
+        if (loc == "Shows") setUnderline("shows")
+        if (loc == "People") setUnderline("people")
     }, [location])
     return (
         <header>

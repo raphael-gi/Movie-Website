@@ -8,6 +8,7 @@ function Movies() {
         sort: "popularity.desc"
     })
     const URL = process.env.REACT_APP_API_URL + "discover/movie?api_key=" + process.env.REACT_APP_API_KEY + "&sort_by="
+    const IMAGE_URL = process.env.REACT_APP_API_IMAGE + "w500"
 
     useEffect(() => {
         setMovies()
@@ -22,15 +23,13 @@ function Movies() {
     }
     const showMovies = () => {
         const results = content.results.map((cont) =>
-            <Link className="movie" key={cont.id} to={"/Movies/" + cont.id}>
-                <div>
-                    {cont.poster_path && <img className="movies-poster" src={"https://image.tmdb.org/t/p/w500/" + cont.poster_path} />}
-                    <h3>{cont.title}</h3>
-                </div>
+            <Link className="card" key={cont.id} to={"/Movies/" + cont.id}>
+                {cont.poster_path && <img className="card-poster" src={IMAGE_URL + cont.poster_path} />}
+                <h3>{cont.title}</h3>
             </Link>
         )
         return (
-            <div className="wrap-movies">
+            <div className="wrap-cards">
                 {results}
             </div>
         )

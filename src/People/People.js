@@ -22,16 +22,14 @@ function People() {
     }, [searchParams])
     const showPeople = () => {
         const results = content.results.map((person) =>
-            <Link className="person" key={person.id} to={"/People/" + person.id}>
-                <div>
-                    {person.profile_path && <img className="profile-image" src={IMAGE_URL + person.profile_path}/>}
-                    <h3 className="person-title">{person.name}</h3>
-                    <h4>{person.known_for.map((known) => known.title ? known.title+ ", " : known.name + ", ")}</h4>
-                </div>
+            <Link className="card" key={person.id} to={"/People/" + person.id}>
+                {person.profile_path && <img className="card-poster" src={IMAGE_URL + person.profile_path}/>}
+                <h3>{person.name}</h3>
+                <h4>{person.known_for.map((known) => known.title ? known.title+ ", " : known.name + ", ")}</h4>
             </Link>
         )
         return (
-            <div className="wrap-people">
+            <div className="wrap-cards">
                 {results}
             </div>
         )

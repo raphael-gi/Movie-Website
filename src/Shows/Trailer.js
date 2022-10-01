@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom"
 import ReactPlayer from 'react-player'
 
 
-function Trailer() {
+function Trailer(content) {
     const { id } = useParams()
 
     const [video, setVideo] = useState({
@@ -15,8 +15,8 @@ function Trailer() {
 
     const getTrailer = (data) => {
         if (data.results.length == 0) return false
-        let official = false
-        let offic = false
+        let official = null
+        let offic = null
         for (let i = 0; i < data.results.length; i++) {
             if (data.results[i].official && data.results[i].type == "Trailer") {
                 official = data.results[i].key
@@ -25,7 +25,7 @@ function Trailer() {
         }
         if (offic) return offic
         if (official) return official
-        return 0
+        return data.results[0].key
     }
     useEffect(() => {
         fetch(VIDEO_URL)
@@ -53,16 +53,16 @@ function Trailer() {
             </div>
         )
     }
-        return (
-            <div className="show-trailers">
-                <div className="show-selected-trailer">
-                    <ReactPlayer width={"100%"} url={"https://www.youtube.com/watch?v=" + video.key} />
-                </div>
-                <div className="wrap-trailer-options">
-                    {trailer}
-                </div>
+    return (
+        <div className="show-trailers">
+            <div className="show-selected-trailer">
+                <ReactPlayer width={"100%"} url={"https://www.youtube.com/watch?v=" + video.key} />
             </div>
-        )
+            <div className="wrap-trailer-options">
+                {trailer}
+            </div>
+        </div>
+    )
 }
 
 export default Trailer
