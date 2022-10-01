@@ -229,6 +229,14 @@ header {
 .movie-poster {
   width: 400px;
 }
+.movie-nav {
+  height: 60px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: solid;
+  margin: 50px 0;
+}
 .wrap-cast {
   display: flex;
   gap: 50px;
@@ -238,12 +246,14 @@ header {
   width: 200px;
 }
 .content-scroll {
-  overflow-y: auto;
+  overflow-x: auto;
   height: 80vh;
-  scrollbar-color: black;
+  scroll-snap-type: x mandatory;
+  display: flex;
 }
 .content-scroll-section {
-  min-height: 100%;
+  scroll-snap-align: center;
+  min-width: 100%;
 }
 
 /* SHOWS */

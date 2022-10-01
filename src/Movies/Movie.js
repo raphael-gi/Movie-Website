@@ -3,9 +3,44 @@ import axios from '../Conn'
 import { Link, useParams } from "react-router-dom"
 import ReactPlayer from 'react-player'
 
-function Trailer() {
-    const { id } = useParams()
+function Trailer(props) {
+    function showTrailers() {
+        const results = props.video.content.results.map((trailer) =>
+            <div onClick={
+                () => {
+                    props.setVideo({
+                        content: props.video.content,
+                        key: trailer.key
+                    })
+                }
+            } key={trailer.id}>
+                {trailer.name}
+            </div>
+        )
+        return (
+            <div>
+                {results}
+            </div>
+        )
+    }
+    return (
+        <section id="Trailers" className="content-scroll-section">
+            <ReactPlayer url={"https://www.youtube.com/watch?v=" + props.video.key} />
+            {showTrailers()}
+        </section>
+    )
+}
 
+function Movie() {
+    const { id } = useParams()
+    const [content, setContent] = useState(null)
+    const [credits, setCredits] = useState(null)
+    const [creditsAmount, setCreditsAmount] = useState(10)
+    const [error, setError] = useState(null)
+
+    const URL = process.env.REACT_APP_API_URL + "movie/" + id + "?api_key=" + process.env.REACT_APP_API_KEY
+    const IMAGE_URL = process.env.REACT_APP_API_IMAGE + "original/"
+    const CREDITS_URL = process.env.REACT_APP_API_URL + "movie/" + id + "/credits?api_key=" + process.env.REACT_APP_API_KEY
     const [video, setVideo] = useState({
         content: null,
         key: null
@@ -25,60 +60,6 @@ function Trailer() {
         if (official) return official
         return data.results[0].key
     }
-    useEffect(() => {
-        async function fetchData() {
-            const request = await axios.get(VIDEO_URL)
-            console.log(request.data)
-            setVideo({
-                content: request.data,
-                key: getTrailer(request.data)
-            })
-        }
-        fetchData()
-
-    }, [VIDEO_URL])
-    function showTrailers() {
-        const results = video.content.results.map((trailer) =>
-            <div onClick={
-                () => {
-                    setVideo({
-                        content: video.content,
-                        key: trailer.key
-                    })
-                }
-            } key={trailer.id}>
-                {trailer.name}
-            </div>
-        )
-        return (
-            <div>
-                {results}
-            </div>
-        )
-    }
-    if (video.content && video.content.results.length > 0) {
-        return (
-            <section id="Trailers" className="content-scroll-section">
-                <ReactPlayer url={"https://www.youtube.com/watch?v=" + video.key} />
-                {showTrailers()}
-            </section>
-        )
-    }
-    return (
-        <></>
-    )
-}
-
-function Movie() {
-    const { id } = useParams()
-    const [content, setContent] = useState(null)
-    const [credits, setCredits] = useState(null)
-    const [creditsAmount, setCreditsAmount] = useState(10)
-    const [error, setError] = useState(null)
-
-    const URL = process.env.REACT_APP_API_URL + "movie/" + id + "?api_key=" + process.env.REACT_APP_API_KEY
-    const IMAGE_URL = process.env.REACT_APP_API_IMAGE + "original/"
-    const CREDITS_URL = process.env.REACT_APP_API_URL + "movie/" + id + "/credits?api_key=" + process.env.REACT_APP_API_KEY
     useEffect(() => {
         fetch(URL)
             .then(response => {
@@ -108,6 +89,16 @@ function Movie() {
             .catch(error => {
                 setError(error.message)
             })
+        async function fetchData() {
+            const request = await axios.get(VIDEO_URL)
+            if (request.data.results.length > 0) {
+                setVideo({
+                    content: request.data,
+                    key: getTrailer(request.data)
+                })
+            }
+        }
+        fetchData()
     }, [])
 
     const showCast = () => {
@@ -143,12 +134,12 @@ function Movie() {
                     </div>
                 </section>
                 <div className="wrap">
-                    <div>
-                        <a href="#Trailers">Trailers</a>
-                        <a href="#Cast">Cast</a>
-                    </div>                    
+                    <nav className="movie-nav">
+                        {video.content && <a href="#Trailers"><h2>Trailer</h2></a>}
+                        <a href="#Cast"><h2>Cast</h2></a>
+                    </nav>
                     <section className="content-scroll">
-                        <Trailer />
+                        {video.content && <Trailer video={video} setVideo={setVideo} />}
                         <section id="Cast" className="content-scroll-section">
                             {showCast()}
                         </section>
