@@ -94,12 +94,28 @@ function Movie() {
             const request = await axios.get(URL)
             const requestVideo = await axios.get(VIDEO_URL)
             const requestCredits = await axios.get(CREDITS_URL)
+            console.log(request)
             setContent(request.data)
             if (requestVideo.data.results.length > 0) setVideo({ content: requestVideo.data, key: getTrailer(requestVideo.data)})
             if (requestCredits.data.cast.length > 0) setCredits(requestCredits.data)
         }
         fetchData()
     }, [])
+    const getStars = () => {
+        const starsAmount = Math.round((content.vote_average / 2) * 2) / 2
+        const stars = []
+        for (let i = 0; i < 5; i++) {
+            if (i < Math.floor(starsAmount)) stars.push(<i className="bi bi-star-fill" />)
+            if (i >= starsAmount) stars.push(<i className="bi bi-star" />)
+            if (i < starsAmount && i + 1 > starsAmount) stars.push(<i className="bi bi-star-half" />)
+        }
+        const resultStars = stars.map((star) =>
+                <span>{star}</span>
+            )
+        return (
+            resultStars
+        )
+    }
     if (content) {
         return (
             <>
@@ -108,6 +124,7 @@ function Movie() {
                         <h1 className="show-title">{content.title}</h1>
                         <h2 className="tagline"><em>{content.tagline}</em></h2>
                         <h3>{content.overview}</h3>
+                        {getStars()}
                     </div>
                     <div className="wrap-backdrop">
                         <div className="show-backdrop" style={{backgroundImage: "linear-gradient(to right, rgb(33, 33, 39), rgba(0, 0, 0, 0)),url('" + IMAGE_URL + content.backdrop_path + "')"}} />
