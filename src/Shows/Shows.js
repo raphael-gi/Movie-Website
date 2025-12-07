@@ -69,8 +69,7 @@ function Shows() {
         const order = document.getElementById("sort").value;
         setAttributes({
             sort: order,
-            genres: selectedGenres,
-            airDateGte: ""
+            genres: selectedGenres
         })
     }
     if (content && genre) {
@@ -107,15 +106,6 @@ function Shows() {
                                 } className="option-select">
                                     <h2>Filter</h2>
                                     <i className="arrow bi bi-caret-right-fill" style={option == 1 ? {rotate: "90deg"} : {rotate: "0deg"}} />
-                                </div>
-                                <h3>Air Dates</h3>
-                                <div className="flex">
-                                    <h4>From:</h4>
-                                    <input type="date" />
-                                </div>
-                                <div className="flex">
-                                    <h4>To:</h4>
-                                    <input type="date" />
                                 </div>
                                 <h3>Genres</h3>
                                 {showGenres()}

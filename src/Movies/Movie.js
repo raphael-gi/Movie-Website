@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react"
-import axios from '../Conn'
-import { Link, useParams } from "react-router-dom"
-import ReactPlayer from 'react-player'
+import { useEffect, useState } from "react";
+import axios from '../Conn';
+import { Link, useParams, useNavigate } from "react-router-dom";
+import ReactPlayer from 'react-player';
 
 function Trailer(props) {
     const showTrailers = () => {
@@ -32,7 +32,6 @@ function Trailer(props) {
         </section>
     )
 }
-
 function Credits(props) {
     const [creditsAmount, setCreditsAmount] = useState(10)
     const IMAGE_URL = process.env.REACT_APP_API_IMAGE + "w500/"
@@ -60,6 +59,44 @@ function Credits(props) {
         </section>
     )
 }
+function Collection(props) {
+    const IMAGE_URL = process.env.REACT_APP_API_IMAGE + "original/"
+    const navigate = useNavigate();
+    
+    const handleNavigation = (id) => {
+        navigate("/Movies/" + id)
+    }
+    const showParts = () => {
+        const parts = props.collection.parts.map((part) =>
+            <div onClick={
+                () => {
+                    handleNavigation(part.id)
+                }
+            } key={part.id} className="content" style={{cursor: "pointer"}}>
+                {part.poster_path && <img className="content-poster" src={IMAGE_URL + part.poster_path} />}
+                <div>
+                    <h2>{part.title}</h2>
+                    <h3 className="tagline">{part.release_date}</h3>
+                    <h3>{part.vote_average}<i className="bi bi-star-fill" /></h3>
+                </div>
+            </div>
+        )
+        return parts
+    }
+    return (
+        <section id="Collection" className="content-scroll-section">
+            <h1>{props.collection.name}</h1>
+            <h3>{props.collection.overview}</h3>
+            <div style={{display: "flex", marginTop: "2%"}}>
+                <div className="wrap-content" style={{width: "60%", marginLeft: "2%"}}>
+                    {showParts()}
+                </div>
+                {props.collection.poster_path && <img style={{marginLeft: "auto", height: "700px"}} src={IMAGE_URL + props.collection.poster_path} />}
+            </div>
+
+        </section>
+    )
+}
 
 function Movie() {
     const { id } = useParams()
@@ -69,11 +106,12 @@ function Movie() {
         key: null
     })
     const [credits, setCredits] = useState(null)
+    const [collection, setCollection] = useState(null)
     const [error, setError] = useState(null)
 
-    const URL = process.env.REACT_APP_API_URL + "movie/" + id + "?api_key=" + process.env.REACT_APP_API_KEY
+    const URL = "movie/" + id + "?api_key=" + process.env.REACT_APP_API_KEY
     const IMAGE_URL = process.env.REACT_APP_API_IMAGE + "original/"
-    const CREDITS_URL = process.env.REACT_APP_API_URL + "movie/" + id + "/credits?api_key=" + process.env.REACT_APP_API_KEY
+    const CREDITS_URL = "movie/" + id + "/credits?api_key=" + process.env.REACT_APP_API_KEY
     const VIDEO_URL = "movie/" + id + "/videos?api_key=" + process.env.REACT_APP_API_KEY
     const getTrailer = (data) => {
         if (data.results.length == 0) return false
@@ -94,10 +132,12 @@ function Movie() {
             const request = await axios.get(URL)
             const requestVideo = await axios.get(VIDEO_URL)
             const requestCredits = await axios.get(CREDITS_URL)
-            console.log(request)
+            let requestCollection = null
             setContent(request.data)
+            if (request.data.belongs_to_collection) requestCollection = await axios.get(`collection/${request.data.belongs_to_collection.id}?api_key=` + process.env.REACT_APP_API_KEY)
             if (requestVideo.data.results.length > 0) setVideo({ content: requestVideo.data, key: getTrailer(requestVideo.data)})
             if (requestCredits.data.cast.length > 0) setCredits(requestCredits.data)
+            if (requestCollection) setCollection(requestCollection.data)
         }
         fetchData()
     }, [])
@@ -133,11 +173,13 @@ function Movie() {
                 <div className="wrap">
                     <nav className="movie-nav">
                         {video.content && <a href="#Trailers"><h2>Trailer</h2></a>}
-                        <a href="#Cast"><h2>Cast</h2></a>
+                        {credits && <a href="#Cast"><h2>Cast</h2></a>}
+                        {collection && <a href="#Collection"><h2>Collection</h2></a>}
                     </nav>
                     <section className="content-scroll">
                         {video.content && <Trailer video={video} setVideo={setVideo} />}
                         {credits && <Credits credits={credits} setCredits={setCredits} />}
+                        {collection && <Collection collection={collection} setCollection={setCollection} />}
                     </section>
                 </div>
             </>
